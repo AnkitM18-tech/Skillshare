@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { Textarea } from "../ui/textarea";
 
 const FormControls = ({ formControls = [], formData, setFormData }) => {
   const renderComponentByType = (controlItem) => {
