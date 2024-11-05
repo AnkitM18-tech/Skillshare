@@ -21,6 +21,8 @@ const AuthPage = () => {
     setSignInFormData,
     signUpFormData,
     setSignUpFormData,
+    registerUser,
+    loginUser,
   } = useContext(AuthContext);
 
   const changeActiveTab = (value) => {
@@ -76,6 +78,7 @@ const AuthPage = () => {
                   formData={signUpFormData}
                   setFormData={setSignUpFormData}
                   isButtonDisabled={!checkSignUpFormValidity()}
+                  handleSubmit={registerUser}
                 />
               </CardContent>
             </Card>
@@ -95,6 +98,7 @@ const AuthPage = () => {
                   formData={signInFormData}
                   setFormData={setSignInFormData}
                   isButtonDisabled={!checkSignInFormValidity()}
+                  handleSubmit={loginUser}
                 />
               </CardContent>
             </Card>
