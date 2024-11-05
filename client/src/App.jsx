@@ -7,6 +7,7 @@ import Dashboard from "./pages/instructor/Dashboard";
 import StudentViewLayout from "./components/studentView/StudentViewLayout";
 import Home from "./pages/student/Home";
 import NotFound from "./pages/notFound/NotFound";
+import AddCourse from "./pages/instructor/AddCourse";
 
 function App() {
   const { auth } = useContext(AuthContext);
@@ -30,6 +31,16 @@ function App() {
               authenticated={auth.authenticate}
               user={auth?.user}
               element={<Dashboard />}
+            />
+          }
+        />
+        <Route
+          path="/instructor/create-course"
+          element={
+            <ProtectRoute
+              authenticated={auth.authenticate}
+              user={auth?.user}
+              element={<AddCourse />}
             />
           }
         />
