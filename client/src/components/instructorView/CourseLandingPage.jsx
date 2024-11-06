@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Card, CardContent, CardHeader } from "../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import FormControls from "../form/FormControls";
 import { courseLandingPageFormControls } from "@/config";
 import { InstructorContext } from "@/context/instructorContext";
@@ -9,7 +9,9 @@ const CourseLandingPage = () => {
     useContext(InstructorContext);
   return (
     <Card>
-      <CardHeader>Course Landing Page</CardHeader>
+      <CardHeader>
+        <CardTitle>Course Landing Page</CardTitle>
+      </CardHeader>
       <CardContent>
         <FormControls
           formControls={courseLandingPageFormControls}
