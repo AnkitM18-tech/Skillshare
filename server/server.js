@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const authRouter = require("./routes/auth.routes");
+const mediaRouter = require("./routes/media.routes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -26,6 +27,7 @@ mongoose
 
 // routes configuration
 app.use("/auth", authRouter);
+app.use("/media", mediaRouter);
 
 app.use((err, req, res, next) => {
   console.log(err.stack);
