@@ -6,7 +6,7 @@ import { Input } from "../ui/input";
 import { Switch } from "../ui/switch";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { courseCurriculumInitialFormData } from "@/config";
-import { mediaUploadService } from "@/services";
+import { mediaDeleteService, mediaUploadService } from "@/services";
 import ProgressBar from "../form/ProgressBar";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
 
@@ -83,6 +83,22 @@ const Curriculum = () => {
     });
   };
 
+  const handleReplaceVideo = async (index) => {
+    let copyOfCourseCurriculumFormData = [...courseCurriculumFormData];
+    const currentVideoPublicID =
+      copyOfCourseCurriculumFormData[index].public_id;
+
+    const deleteMediaResponse = await mediaDeleteService(currentVideoPublicID);
+    if (deleteMediaResponse?.success) {
+      copyOfCourseCurriculumFormData[index] = {
+        ...copyOfCourseCurriculumFormData[index],
+        public_id: "",
+        videoUrl: "",
+      };
+    }
+    setCourseCurriculumFormData(copyOfCourseCurriculumFormData);
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -134,7 +150,9 @@ const Curriculum = () => {
                       width="450px"
                       height="200px"
                     />
-                    <Button>Replace Video</Button>
+                    <Button onClick={() => handleReplaceVideo(index)}>
+                      Replace Video
+                    </Button>
                     <Button className="bg-red-500">Delete Lecture</Button>
                   </div>
                 ) : (
