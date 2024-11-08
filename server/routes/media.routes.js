@@ -28,10 +28,16 @@ router.route("/delete/:id").delete(async (req, res) => {
         .status(400)
         .json({ success: false, message: "Asset Public ID is required" });
     }
-    await deleteMediaFromCloudinary(id);
-    return res.status(200).json({
-      success: true,
-      message: "Asset Deleted Successfully from cloudinary",
+    const response = await deleteMediaFromCloudinary(id, "video");
+    if (response.result === "ok") {
+      return res.status(200).json({
+        success: true,
+        message: "Asset Deleted Successfully from cloudinary",
+      });
+    }
+    return res.status(500).json({
+      success: false,
+      message: "Error deleting file from cloudinary",
     });
   } catch (error) {
     return res.status(500).json({
