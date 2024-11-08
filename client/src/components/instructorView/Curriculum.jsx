@@ -72,13 +72,29 @@ const Curriculum = () => {
     }
   };
 
+  const validateCourseCurriculumFormData = () => {
+    return courseCurriculumFormData.every((item) => {
+      return (
+        item &&
+        typeof item === "object" &&
+        item.title.trim() !== "" &&
+        item.videoUrl.trim() !== ""
+      );
+    });
+  };
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Create Course Curriculum</CardTitle>
       </CardHeader>
       <CardContent>
-        <Button onClick={addLecture}>Add Lecture</Button>
+        <Button
+          disabled={!validateCourseCurriculumFormData() || mediaUploadProgress}
+          onClick={addLecture}
+        >
+          Add Lecture
+        </Button>
         {mediaUploadProgress ? (
           <ProgressBar
             isMediaUploading={mediaUploadProgress}
