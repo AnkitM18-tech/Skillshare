@@ -31,6 +31,28 @@ export async function mediaUploadService(formData, onProgressCallback) {
 
 export async function mediaDeleteService(id) {
   const { data } = await axiosInstance.delete(`/media/delete/${id}`);
+  return data;
+}
 
+export async function getCourseListService() {
+  const { data } = await axiosInstance.get("/instructor/course/get");
+  return data;
+}
+
+export async function getCourseDetailsService(id) {
+  const { data } = await axiosInstance.get(`/instructor/course/get/${id}`);
+  return data;
+}
+
+export async function addNewCourseService(formData) {
+  const { data } = await axiosInstance.post("/instructor/course/add", formData);
+  return data;
+}
+
+export async function updateCourseService(id, formData) {
+  const { data } = await axiosInstance.put(
+    `/instructor/course/update/${id}`,
+    formData
+  );
   return data;
 }
