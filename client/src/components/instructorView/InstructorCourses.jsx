@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 import {
@@ -11,15 +11,30 @@ import {
 } from "../ui/table";
 import { Edit, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { InstructorContext } from "@/context/instructorContext";
+import {
+  courseCurriculumInitialFormData,
+  courseLandingInitialFormData,
+} from "@/config";
 
 const InstructorCourses = ({ listOfCourses }) => {
   const navigate = useNavigate();
+  const {
+    setEditCourseId,
+    setCourseLandingFormData,
+    setCourseCurriculumFormData,
+  } = useContext(InstructorContext);
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="text-3xl font-bold">All Courses</CardTitle>
         <Button
-          onClick={() => navigate("/instructor/create-course")}
+          onClick={() => {
+            setEditCourseId(null);
+            setCourseCurriculumFormData(courseCurriculumInitialFormData);
+            setCourseLandingFormData(courseLandingInitialFormData);
+            navigate("/instructor/create-course");
+          }}
           className="p-6"
         >
           Create New Course +
@@ -50,7 +65,13 @@ const InstructorCourses = ({ listOfCourses }) => {
                           parseInt(course?.students?.length)}
                       </TableCell>
                       <TableCell className="text-right">
-                        <Button variant="ghost" size="sm">
+                        <Button
+                          onClick={() => {
+                            navigate(`/instructor/edit-course/${course?._id}`);
+                          }}
+                          variant="ghost"
+                          size="sm"
+                        >
                           <Edit className="w-6 h-6 text-green-500" />
                         </Button>
                         <Button variant="ghost" size="sm">
