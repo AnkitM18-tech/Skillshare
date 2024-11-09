@@ -10,9 +10,13 @@ import {
 } from "@/config";
 import { AuthContext } from "@/context/authContext";
 import { InstructorContext } from "@/context/instructorContext";
-import { addNewCourseService } from "@/services";
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import {
+  addNewCourseService,
+  getCourseDetailsService,
+  updateCourseService,
+} from "@/services";
+import React, { useContext, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 const AddCourse = () => {
   const {
@@ -20,10 +24,13 @@ const AddCourse = () => {
     setCourseCurriculumFormData,
     courseLandingFormData,
     setCourseLandingFormData,
+    editCourseId,
+    setEditCourseId,
   } = useContext(InstructorContext);
 
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
+  const params = useParams();
 
   function isEmpty(value) {
     if (Array.isArray(value)) {
@@ -68,25 +75,56 @@ const AddCourse = () => {
       isPublished: true,
     };
 
-    const response = await addNewCourseService(courseAggregatedFormData);
+    const response =
+      editCourseId !== null
+        ? await updateCourseService(editCourseId, courseAggregatedFormData)
+        : await addNewCourseService(courseAggregatedFormData);
 
     if (response?.success) {
       setCourseCurriculumFormData(courseCurriculumInitialFormData);
       setCourseLandingFormData(courseLandingInitialFormData);
+      setEditCourseId(null);
       navigate(-1); // move to previous page
     }
   }
 
+  async function fetchCourseDetails() {
+    const response = await getCourseDetailsService(editCourseId);
+    if (response?.success) {
+      const courseFormData = Object.keys(courseLandingInitialFormData).reduce(
+        (acc, key) => {
+          acc[key] = response?.data[key] || courseLandingInitialFormData[key];
+          return acc;
+        },
+        {}
+      );
+      setCourseLandingFormData(courseFormData);
+      setCourseCurriculumFormData(response?.data?.curriculum);
+    }
+  }
+
+  useEffect(() => {
+    if (editCourseId !== null) {
+      fetchCourseDetails();
+    }
+  }, [editCourseId]);
+
+  useEffect(() => {
+    if (params?.courseId) setEditCourseId(params?.courseId);
+  }, [params?.courseId]);
+
   return (
     <div className="container p-4 mx-auto">
       <div className="flex justify-between">
-        <h1 className="mb-5 text-3xl font-bold">Create New Course</h1>
+        <h1 className="mb-5 text-3xl font-bold">
+          {editCourseId ? "Update Course" : "Create New Course"}
+        </h1>
         <Button
           disabled={!validateFormData()}
           className="px-8 text-sm font-bold tracking-wider"
           onClick={createCourse}
         >
-          Create
+          {editCourseId ? "Update" : "Create"}
         </Button>
       </div>
       <Card>
