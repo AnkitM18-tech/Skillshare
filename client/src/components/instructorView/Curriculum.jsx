@@ -106,6 +106,20 @@ const Curriculum = () => {
     setCourseCurriculumFormData(copyOfCourseCurriculumFormData);
   };
 
+  const handleDeleteVideo = async (index) => {
+    let copyOfCourseCurriculumFormData = [...courseCurriculumFormData];
+    const currentVideoPublicID =
+      copyOfCourseCurriculumFormData[index].public_id;
+
+    const response = await mediaDeleteService(currentVideoPublicID);
+    if (response?.success) {
+      copyOfCourseCurriculumFormData = copyOfCourseCurriculumFormData.filter(
+        (_, currIndex) => currIndex !== index
+      );
+    }
+    setCourseCurriculumFormData(copyOfCourseCurriculumFormData);
+  };
+
   const openBulkUploadDialog = () => {
     bulkUploadInputRef.current?.click();
   };
@@ -232,7 +246,12 @@ const Curriculum = () => {
                     <Button onClick={() => handleReplaceVideo(index)}>
                       Replace Video
                     </Button>
-                    <Button className="bg-red-500">Delete Lecture</Button>
+                    <Button
+                      onClick={() => handleDeleteVideo(index)}
+                      className="bg-red-500"
+                    >
+                      Delete Lecture
+                    </Button>
                   </div>
                 ) : (
                   <Input
