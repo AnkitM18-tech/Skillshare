@@ -12,7 +12,7 @@ import {
 import { Edit, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const InstructorCourses = () => {
+const InstructorCourses = ({ listOfCourses }) => {
   const navigate = useNavigate();
   return (
     <Card>
@@ -37,19 +37,29 @@ const InstructorCourses = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell className="font-medium">MERN Full Stack</TableCell>
-                <TableCell>1</TableCell>
-                <TableCell>₹ 5999</TableCell>
-                <TableCell className="text-right">
-                  <Button variant="ghost" size="sm">
-                    <Edit className="w-6 h-6 text-green-500" />
-                  </Button>
-                  <Button variant="ghost" size="sm">
-                    <Trash2 className="w-6 h-6 text-red-500" />
-                  </Button>
-                </TableCell>
-              </TableRow>
+              {listOfCourses && listOfCourses.length > 0
+                ? listOfCourses.map((course) => (
+                    <TableRow key={course?.title}>
+                      <TableCell className="font-medium">
+                        {course?.title}
+                      </TableCell>
+                      <TableCell>{course?.students?.length}</TableCell>
+                      <TableCell>
+                        ₹{" "}
+                        {parseFloat(course?.pricing) *
+                          parseInt(course?.students?.length)}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <Button variant="ghost" size="sm">
+                          <Edit className="w-6 h-6 text-green-500" />
+                        </Button>
+                        <Button variant="ghost" size="sm">
+                          <Trash2 className="w-6 h-6 text-red-500" />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : null}
             </TableBody>
           </Table>
         </div>
