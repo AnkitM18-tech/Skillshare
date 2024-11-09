@@ -3,12 +3,27 @@ import InstructorDashboard from "@/components/instructorView/InstructorDashboard
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { AuthContext } from "@/context/authContext";
+import { InstructorContext } from "@/context/instructorContext";
+import { getCourseListService } from "@/services";
 import { BarChart, Book, LogOut } from "lucide-react";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const { resetCredentials } = useContext(AuthContext);
+  const { instructorCoursesList, setInstructorCoursesList } =
+    useContext(InstructorContext);
+
+  async function fetchCourseList() {
+    const response = await getCourseListService();
+    if (response?.success) {
+      setInstructorCoursesList(response.data);
+    }
+  }
+
+  useEffect(() => {
+    fetchCourseList();
+  }, []);
   const logout = () => {
     resetCredentials();
     sessionStorage.clear();
@@ -24,7 +39,7 @@ const Dashboard = () => {
       icon: Book,
       label: "Courses",
       value: "courses",
-      component: <InstructorCourses />,
+      component: <InstructorCourses listOfCourses={instructorCoursesList} />,
     },
     {
       icon: LogOut,
