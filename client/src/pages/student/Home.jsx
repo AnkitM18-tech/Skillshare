@@ -58,7 +58,10 @@ const Home = () => {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {studentViewCoursesList && studentViewCoursesList.length > 0 ? (
             studentViewCoursesList.map((course) => (
-              <div className="overflow-hidden border rounded-lg shadow cursor-pointer">
+              <div
+                key={course?._id}
+                className="overflow-hidden border rounded-lg shadow cursor-pointer"
+              >
                 <img
                   width={300}
                   height={150}
@@ -76,7 +79,7 @@ const Home = () => {
               </div>
             ))
           ) : (
-            <h1>No Courses Found</h1>
+            <h1 className="text-3xl font-bold">No Courses Found</h1>
           )}
         </div>
       </section>
