@@ -15,7 +15,7 @@ import { StudentContext } from "@/context/studentContext";
 import { getStudentCourseListService } from "@/services";
 import { ArrowUpDownIcon } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const Courses = () => {
   const [sort, setSort] = useState("price-lowtohigh");
@@ -27,6 +27,7 @@ const Courses = () => {
     loading,
     setLoading,
   } = useContext(StudentContext);
+  const navigate = useNavigate();
 
   const onFilterChange = (sectionId, option) => {
     let copyOfFilters = { ...filters };
@@ -152,7 +153,11 @@ const Courses = () => {
             {loading && <Skeleton />}
             {studentViewCoursesList && studentViewCoursesList.length > 0 ? (
               studentViewCoursesList.map((course) => (
-                <Card className="cursor-pointer" key={course?._id}>
+                <Card
+                  onClick={() => navigate(`/course-details/${course._id}`)}
+                  className="cursor-pointer"
+                  key={course?._id}
+                >
                   <CardContent className="flex gap-4 p-4">
                     <div className="flex-shrink-0 w-48 h-32">
                       <img
