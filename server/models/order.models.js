@@ -31,11 +31,9 @@ const orderSchema = new mongoose.Schema({
   },
   paymentId: {
     type: String,
-    required: true,
   },
   payerId: {
     type: String,
-    required: true,
   },
   instructorId: {
     type: String,
