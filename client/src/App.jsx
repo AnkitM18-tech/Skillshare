@@ -10,6 +10,8 @@ import NotFound from "./pages/notFound/NotFound";
 import AddCourse from "./pages/instructor/AddCourse";
 import Courses from "./pages/student/Courses";
 import CourseDetails from "./pages/student/CourseDetails";
+import PaymentReturn from "./pages/student/PaymentReturn";
+import StudentCourses from "./pages/student/StudentCourses";
 
 function App() {
   const { auth } = useContext(AuthContext);
@@ -70,6 +72,8 @@ function App() {
           <Route path="home" element={<Home />} />
           <Route path="courses" element={<Courses />} />
           <Route path="course-details/:courseId" element={<CourseDetails />} />
+          <Route path="payment-return" element={<PaymentReturn />} />
+          <Route path="student-courses" element={<StudentCourses />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
