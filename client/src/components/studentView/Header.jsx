@@ -30,9 +30,12 @@ const Header = () => {
       </div>
       <div className="flex items-center space-x-4">
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-3">
+          <div
+            onClick={() => navigate("/student-courses")}
+            className="flex items-center gap-3 cursor-pointer"
+          >
             <span className="font-bold md:text-xl text-[14px]">My Courses</span>
-            <TvMinimalPlay className="w-8 h-8 cursor-pointer" />
+            <TvMinimalPlay className="w-8 h-8" />
           </div>
           <Button onClick={logOut} className="bg-red-500">
             Sign Out
