@@ -33,7 +33,7 @@ app.use("/auth", authRouter);
 app.use("/media", mediaRouter);
 app.use("/instructor/course", courseRouter);
 app.use("/student/course", studentCourseRouter);
-app.use("/order", orderRouter);
+app.use("/student/order", orderRouter);
 
 app.use((err, req, res, next) => {
   console.log(err.stack);
