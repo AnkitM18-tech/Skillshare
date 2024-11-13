@@ -180,7 +180,7 @@ const Courses = () => {
                             : "Lecture"
                         } - Difficulty : ${course?.level.toUpperCase()}`}
                       </p>
-                      <p className="text-lg font-bold">₹ {course?.pricing}</p>
+                      <p className="text-lg font-bold">$ {course?.pricing}</p>
                     </div>
                   </CardContent>
                 </Card>

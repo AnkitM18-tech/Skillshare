@@ -60,7 +60,7 @@ const InstructorCourses = ({ listOfCourses }) => {
                       </TableCell>
                       <TableCell>{course?.students?.length}</TableCell>
                       <TableCell>
-                        ₹{" "}
+                        ${" "}
                         {parseFloat(course?.pricing) *
                           parseInt(course?.students?.length)}
                       </TableCell>
