@@ -74,7 +74,7 @@ const Home = () => {
                   <p className="mb-2 text-sm text-gray-600">
                     {course?.instructorName}
                   </p>
-                  <p className="font-bold text-[16px]">₹ {course?.pricing}</p>
+                  <p className="font-bold text-[16px]">$ {course?.pricing}</p>
                 </div>
               </div>
             ))
