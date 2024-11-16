@@ -11,8 +11,12 @@ import {
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { filterOptions, sortOptions } from "@/config";
+import { AuthContext } from "@/context/authContext";
 import { StudentContext } from "@/context/studentContext";
-import { getStudentCourseListService } from "@/services";
+import {
+  checkCoursePurchaseInfoService,
+  getStudentCourseListService,
+} from "@/services";
 import { ArrowUpDownIcon } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -27,6 +31,7 @@ const Courses = () => {
     loading,
     setLoading,
   } = useContext(StudentContext);
+  const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const onFilterChange = (sectionId, option) => {
@@ -67,6 +72,19 @@ const Courses = () => {
       }
     }
     return queryParams.join("&");
+  };
+
+  const navigateToCourseDetailsOrCourseProgress = async (courseId) => {
+    const response = await checkCoursePurchaseInfoService(
+      courseId,
+      auth?.user?._id
+    );
+
+    if (response?.success) {
+      if (response?.data) {
+        navigate(`/course-progress/${courseId}`);
+      } else navigate(`/course-details/${courseId}`);
+    }
   };
 
   useEffect(() => {
@@ -154,7 +172,9 @@ const Courses = () => {
             {studentViewCoursesList && studentViewCoursesList.length > 0 ? (
               studentViewCoursesList.map((course) => (
                 <Card
-                  onClick={() => navigate(`/course-details/${course._id}`)}
+                  onClick={() =>
+                    navigateToCourseDetailsOrCourseProgress(course?._id)
+                  }
                   className="cursor-pointer"
                   key={course?._id}
                 >
@@ -163,7 +183,7 @@ const Courses = () => {
                       <img
                         className="object-cover w-full h-full"
                         src={course?.image}
-                        alt="course-image"
+                        alt={course?.title}
                       />
                     </div>
                     <div className="flex-1">
