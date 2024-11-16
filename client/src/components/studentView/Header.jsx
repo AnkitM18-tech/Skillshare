@@ -1,11 +1,12 @@
 import { GraduationCap, TvMinimalPlay } from "lucide-react";
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { AuthContext } from "@/context/authContext";
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { resetCredentials } = useContext(AuthContext);
   const logOut = () => {
     resetCredentials();
@@ -20,7 +21,11 @@ const Header = () => {
         </Link>
         <div className="flex items-center space-x-1">
           <Button
-            onClick={() => navigate("/courses")}
+            onClick={() => {
+              location.pathname.includes("/courses")
+                ? null
+                : navigate("/courses");
+            }}
             variant="ghost"
             className="text-[14px] md:text-[16px] font-medium"
           >
