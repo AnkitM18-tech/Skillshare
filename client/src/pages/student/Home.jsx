@@ -3,15 +3,35 @@ import hero from "../../assets/hero.png";
 import { Button } from "@/components/ui/button";
 import { useContext, useEffect } from "react";
 import { StudentContext } from "@/context/studentContext";
-import { getStudentCourseListService } from "@/services";
+import {
+  checkCoursePurchaseInfoService,
+  getStudentCourseListService,
+} from "@/services";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "@/context/authContext";
 const Home = () => {
   const { studentViewCoursesList, setStudentViewCoursesList } =
     useContext(StudentContext);
+  const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const fetchAllCourses = async () => {
     const response = await getStudentCourseListService();
     if (response?.success) {
       setStudentViewCoursesList(response?.data);
+    }
+  };
+
+  const navigateToCourseDetailsOrCourseProgress = async (courseId) => {
+    const response = await checkCoursePurchaseInfoService(
+      courseId,
+      auth?.user?._id
+    );
+
+    if (response?.success) {
+      if (response?.data) {
+        navigate(`/course-progress/${courseId}`);
+      } else navigate(`/course-details/${courseId}`);
     }
   };
 
@@ -59,6 +79,9 @@ const Home = () => {
           {studentViewCoursesList && studentViewCoursesList.length > 0 ? (
             studentViewCoursesList.map((course) => (
               <div
+                onClick={() =>
+                  navigateToCourseDetailsOrCourseProgress(course?._id)
+                }
                 key={course?._id}
                 className="overflow-hidden border rounded-lg shadow cursor-pointer"
               >
