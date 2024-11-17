@@ -111,7 +111,7 @@ const CourseProgress = () => {
   }, [currentLecture]);
 
   useEffect(() => {
-    if (showConfetti) setTimeout(() => setShowConfetti(false), 6000);
+    if (showConfetti) setTimeout(() => setShowConfetti(false), 10000);
   }, [showConfetti]);
 
   return (
@@ -224,7 +224,7 @@ const CourseProgress = () => {
         </DialogContent>
       </Dialog>
       <Dialog open={showCourseCompletedDialog}>
-        <DialogContent className="sm:w-[450px]">
+        <DialogContent showOverlay={false} className="sm:w-[450px]">
           <DialogHeader>
             <DialogTitle>Congratulations🎉!</DialogTitle>
             <DialogDescription className="flex flex-col gap-3">
