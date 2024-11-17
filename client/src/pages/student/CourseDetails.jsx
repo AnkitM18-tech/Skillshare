@@ -13,10 +13,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 import VideoPlayer from "@/components/VideoPlayer/VideoPlayer";
 import { AuthContext } from "@/context/authContext";
 import { StudentContext } from "@/context/studentContext";
-import { getStudentCourseDetailsService, makePaymentService } from "@/services";
+import {
+  checkCoursePurchaseInfoService,
+  getStudentCourseDetailsService,
+  makePaymentService,
+} from "@/services";
 import { CheckCircle, Globe, Lock, PlayCircle } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const CourseDetails = () => {
   const {
@@ -27,6 +31,7 @@ const CourseDetails = () => {
     loading,
     setLoading,
   } = useContext(StudentContext);
+  const navigate = useNavigate();
 
   const { auth } = useContext(AuthContext);
 
@@ -38,6 +43,15 @@ const CourseDetails = () => {
   const location = useLocation();
 
   async function fetchCourseDetails() {
+    const checkIfCourseIsPurchasedResponse =
+      await checkCoursePurchaseInfoService(currentCourseId, auth?.user?._id);
+    if (
+      checkIfCourseIsPurchasedResponse?.success &&
+      checkIfCourseIsPurchasedResponse?.data
+    ) {
+      navigate(`/course-progress/${currentCourseId}`);
+      return;
+    }
     const response = await getStudentCourseDetailsService(currentCourseId);
     if (response?.success) {
       setStudentViewCourseDetails(response?.data);
