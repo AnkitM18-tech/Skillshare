@@ -242,6 +242,8 @@ const Curriculum = () => {
                       url={courseCurriculumFormData[index].videoUrl}
                       width="450px"
                       height="200px"
+                      onProgressUpdate={() => {}}
+                      progressData={null}
                     />
                     <Button onClick={() => handleReplaceVideo(index)}>
                       Replace Video
