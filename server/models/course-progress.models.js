@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const LectureProgressSchema = new mongoose.Schema({
   lectureId: {
     type: String,
+    required: true,
   },
   viewed: {
     type: Boolean,

@@ -4,6 +4,13 @@ const getCoursesBoughtByStudentId = async (req, res) => {
   try {
     const { studentId } = req.params;
     const boughtCourses = await StudentCourses.findOne({ userId: studentId });
+    if (!boughtCourses) {
+      return res.status(200).json({
+        success: true,
+        message: "Yet to enroll in a Course",
+        data: [],
+      });
+    }
     return res.status(200).json({
       success: true,
       message: "Courses fetched successfully",

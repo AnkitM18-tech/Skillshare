@@ -15,7 +15,7 @@ const markLectureAsViewed = async (req, res) => {
           {
             lectureId,
             viewed: true,
-            dateViewed: new Date(),
+            viewedDate: new Date(),
           },
         ],
       });
@@ -26,12 +26,12 @@ const markLectureAsViewed = async (req, res) => {
       );
       if (lectureProgress) {
         lectureProgress.viewed = true;
-        lectureProgress.dateViewed = new Date();
+        lectureProgress.viewedDate = new Date();
       } else {
         progress.lecturesProgress.push({
           lectureId,
           viewed: true,
-          dateViewed: new Date(),
+          viewedDate: new Date(),
         });
       }
       await progress.save();
@@ -95,7 +95,7 @@ const getCourseProgress = async (req, res) => {
 
     if (
       !currentUserCourseProgress ||
-      currentUserCourseProgress?.lecturesProgress.length === 0
+      currentUserCourseProgress?.lecturesProgress?.length === 0
     ) {
       const course = await Course.findById(courseId);
       if (!course) {
