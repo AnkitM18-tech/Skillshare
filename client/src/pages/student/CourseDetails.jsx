@@ -220,6 +220,8 @@ const CourseDetails = () => {
                   }
                   width="450px"
                   height="200px"
+                  onProgressUpdate={() => {}}
+                  progressData={null}
                 />
               </div>
               <div className="mb-4">
@@ -253,6 +255,8 @@ const CourseDetails = () => {
               url={displayVideoFreePreview}
               width="450px"
               height="200px"
+              onProgressUpdate={() => {}}
+              progressData={null}
             />
           </div>
           <div className="flex flex-col gap-4">

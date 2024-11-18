@@ -151,7 +151,7 @@ const CourseProgress = () => {
             height="500px"
             url={currentLecture?.videoUrl}
             onProgressUpdate={setCurrentLecture}
-            progress={currentLecture}
+            progressData={currentLecture}
           />
           <div className="p-6 bg-[#1c1d1f]">
             <h2 className="text-2xl font-bold mb-2">{currentLecture?.title}</h2>
