@@ -35,6 +35,15 @@ const Home = () => {
     }
   };
 
+  const navigateToCoursesPage = async (categoryId) => {
+    sessionStorage.removeItem("filters");
+    const newFilter = {
+      category: [categoryId],
+    };
+    sessionStorage.setItem("filters", JSON.stringify(newFilter));
+    navigate("/courses");
+  };
+
   useEffect(() => {
     fetchAllCourses();
   }, []);
@@ -67,6 +76,7 @@ const Home = () => {
               key={category.id}
               className="justify-start"
               variant="outline"
+              onClick={() => navigateToCoursesPage(category.id)}
             >
               {category.label}
             </Button>
