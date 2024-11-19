@@ -53,7 +53,7 @@ const AuthPage = () => {
           <span className="text-xl font-bold">SkillShare</span>
         </Link>
       </header>
-      <div className="flex items-center justify-center min-h-screen bg-background">
+      <div className="flex items-center justify-center min-h-screen bg-background bg-slate-900">
         <Tabs
           value={activeTab}
           onValueChange={changeActiveTab}

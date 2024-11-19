@@ -106,10 +106,10 @@ const Courses = () => {
   }, []);
 
   return (
-    <div className="container p-4 mx-auto">
+    <div className="container p-4 mx-auto bg-slate-900">
       <h1 className="mb-4 text-3xl font-bold">All Courses</h1>
       <div className="flex flex-col gap-4 md:flex-row">
-        <aside className="w-full space-y-4 md:w-64">
+        <aside className="w-full space-y-4 md:w-64 bg-slate-800 rounded-lg">
           <div>
             {Object.keys(filterOptions).map((key) => (
               <div key={key} className="p-4 border-b">
@@ -163,7 +163,7 @@ const Courses = () => {
                 </DropdownMenuRadioGroup>
               </DropdownMenuContent>
             </DropdownMenu>
-            <span className="text-sm font-bold text-black">
+            <span className="text-sm font-bold text-white">
               {studentViewCoursesList.length} Results
             </span>
           </div>
@@ -193,7 +193,7 @@ const Courses = () => {
                       <p className="mb-2 text-sm text-gray-500">
                         Created By <b>{course?.instructorName}</b>
                       </p>
-                      <p className="text-[16px] text-gray-700 mt-3 mb-2">
+                      <p className="text-[16px] text-gray-400 mt-3 mb-2">
                         {`${course?.curriculum?.length} ${
                           course?.curriculum?.length > 1
                             ? "Lectures"

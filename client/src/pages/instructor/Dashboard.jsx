@@ -49,8 +49,8 @@ const Dashboard = () => {
     },
   ];
   return (
-    <div className="flex h-full min-h-screen bg-gray-100">
-      <aside className="w-64 bg-white shadow-md md:block">
+    <div className="flex h-full min-h-screen bg-slate-900 text-white">
+      <aside className="w-64 bg-slate-800 shadow-md md:block">
         <div className="p-4">
           <h2 className="mb-4 text-2xl font-bold">Instructor View</h2>
           <nav>
@@ -58,7 +58,7 @@ const Dashboard = () => {
               <Button
                 key={item.value}
                 className="justify-start w-full mb-2"
-                variant={activeTab === item.value ? "secondary" : "ghost"}
+                variant={activeTab === item.value ? "outline" : "ghost"}
                 onClick={
                   item.value === "logout"
                     ? logout

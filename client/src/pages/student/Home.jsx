@@ -48,7 +48,7 @@ const Home = () => {
     fetchAllCourses();
   }, []);
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-slate-900">
       <section className="flex flex-col items-center justify-between px-4 py-8 lg:flex-row lg:px-8">
         <div className="lg:w-1/2 lg:pr-12">
           <h1 className="mb-4 text-3xl font-bold">
@@ -68,7 +68,7 @@ const Home = () => {
           />
         </div>
       </section>
-      <section className="px-4 py-8 bg-gray-100 lg:px-8">
+      <section className="px-4 py-8 bg-slate-800 lg:px-8">
         <h2 className="mb-6 text-2xl font-bold">Course Categories</h2>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {courseCategories.map((category) => (
@@ -104,7 +104,7 @@ const Home = () => {
                 />
                 <div className="p-4">
                   <h3 className="mb-2 font-bold">{course?.title}</h3>
-                  <p className="mb-2 text-sm text-gray-600">
+                  <p className="mb-2 text-sm text-gray-400">
                     {course?.instructorName}
                   </p>
                   <p className="font-bold text-[16px]">$ {course?.pricing}</p>

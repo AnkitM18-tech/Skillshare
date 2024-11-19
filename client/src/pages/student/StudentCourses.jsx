@@ -24,7 +24,7 @@ const StudentCourses = () => {
     getStudentEnrolledCourses();
   }, []);
   return (
-    <div className="p-4">
+    <div className="p-4 bg-slate-900">
       <h1 className="mb-8 text-3xl font-bold">Enrolled Courses</h1>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-4">
         {studentEnrolledCourses && studentEnrolledCourses.length > 0 ? (
@@ -37,7 +37,7 @@ const StudentCourses = () => {
                   className="object-cover w-full mb-4 rounded-lg h-52"
                 />
                 <h3 className="mb-1 font-bold">{course?.title}</h3>
-                <p className="mb-2 text-sm text-gray-700">
+                <p className="mb-2 text-sm text-gray-400">
                   Created By <b>{course?.instructorName}</b>
                 </p>
               </CardContent>
