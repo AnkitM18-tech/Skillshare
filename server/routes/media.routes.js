@@ -4,6 +4,7 @@ const {
   uploadMediaToCloudinary,
   deleteMediaFromCloudinary,
 } = require("../utils/cloudinary");
+const fs = require("fs").promises;
 
 const router = express.Router();
 
@@ -12,8 +13,10 @@ const upload = multer({ dest: "uploads/" });
 router.route("/upload").post(upload.single("file"), async (req, res) => {
   try {
     const response = await uploadMediaToCloudinary(req.file.path);
+    await fs.unlink(req.file.path);
     return res.status(200).json({ success: true, data: response });
   } catch (error) {
+    await fs.unlink(req.file.path);
     return res
       .status(500)
       .json({ success: false, message: "Error uploading file to cloudinary" });
@@ -51,9 +54,12 @@ router
   .route("/bulk-upload")
   .post(upload.array("files", 10), async (req, res) => {
     try {
-      const uploadPromises = req.files.map((file) =>
-        uploadMediaToCloudinary(file.path)
-      );
+      const uploadPromises = req.files.map(async (file) => {
+        const result = await uploadMediaToCloudinary(file.path);
+        await fs.unlink(file.path);
+        return result;
+      });
+
       const results = await Promise.all(uploadPromises);
 
       return res.status(200).json({
