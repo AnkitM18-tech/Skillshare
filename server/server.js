@@ -9,7 +9,9 @@ const studentCourseRouter = require("./routes/student-course.routes");
 const orderRouter = require("./routes/order.routes");
 const studentEnrolledCoursesRouter = require("./routes/student-enrolled-courses.routes");
 const courseProgressRouter = require("./routes/course-progress.routes");
+const path = require("path");
 
+const __dirname = path.resolve();
 const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
@@ -38,6 +40,14 @@ app.use("/student/course", studentCourseRouter);
 app.use("/student/order", orderRouter);
 app.use("/student/enrolled-courses", studentEnrolledCoursesRouter);
 app.use("/student/course-progress", courseProgressRouter);
+
+// serving frontend
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client/dist/index.html"));
+  });
+}
 
 app.use((err, req, res, next) => {
   console.log(err.stack);
