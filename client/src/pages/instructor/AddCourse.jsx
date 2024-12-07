@@ -15,7 +15,7 @@ import {
   getCourseDetailsService,
   updateCourseService,
 } from "@/services";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const AddCourse = () => {
@@ -27,6 +27,8 @@ const AddCourse = () => {
     editCourseId,
     setEditCourseId,
   } = useContext(InstructorContext);
+
+  const [existingStudents, setExistingStudents] = useState([]);
 
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -70,7 +72,7 @@ const AddCourse = () => {
       instructorName: auth?.user?.username,
       date: new Date(),
       ...courseLandingFormData,
-      students: [],
+      students: existingStudents,
       curriculum: courseCurriculumFormData,
       isPublished: true,
     };
@@ -83,6 +85,7 @@ const AddCourse = () => {
     if (response?.success) {
       setCourseCurriculumFormData(courseCurriculumInitialFormData);
       setCourseLandingFormData(courseLandingInitialFormData);
+      setExistingStudents([]);
       setEditCourseId(null);
       navigate(-1); // move to previous page
     }
@@ -98,6 +101,7 @@ const AddCourse = () => {
         },
         {}
       );
+      setExistingStudents(response?.data?.students);
       setCourseLandingFormData(courseFormData);
       setCourseCurriculumFormData(response?.data?.curriculum);
     }
